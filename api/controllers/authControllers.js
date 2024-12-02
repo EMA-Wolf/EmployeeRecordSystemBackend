@@ -7,7 +7,7 @@ const loginContoller = async (req, res) => {
 
     if(!email || !password) {
         console.log('No email or password provided');
-        return res.status(400).json({msg: 'Please enter all fields'})
+        return res.status(400).send('Please enter all fields')
     }
 
     try{
@@ -15,14 +15,14 @@ const loginContoller = async (req, res) => {
 
         if(!employee){
             console.log('No employee found with this email');
-            return res.status(404).json({msg: 'No employee found'})
+            return res.status(400).send('No employee found')
         }
 
         const isMatch = await bcrypt.compare(password, employee.password);
         
         if(!isMatch){
             console.log('Incorrect Email or Password');
-            return res.status(401).json({msg: 'Incorrect Email or Password'})
+            return res.status(401).send('Incorrect Email or Password')
         }
         
             // Add attendance for the current date
@@ -49,14 +49,16 @@ const loginContoller = async (req, res) => {
                 lastName: employee.lastName,
                 email: employee.email,
                 position: employee.position,
+                phoneNumber: employee.phoneNumber,
                 department: employee.department,
-                attendance: employee.attendance
+                attendance: employee.attendance,
+                joinDate: employee.joinDate
             }
         });
 
     }catch(err){
         console.log("An error occurred while trying to login to employee", err)
-        return res.status(500).json({msg: 'Server Error'})
+        return res.status(500).send('Server Error')
     }
 }
 

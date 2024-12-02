@@ -1,4 +1,3 @@
-
 // Import the required modules and initialize the Express application.
 const express = require('express');
 const cors = require('cors');
@@ -10,6 +9,7 @@ const app = express();
 const authRoutes = require('./api/routes/authRoutes');
 const leaveRoutes = require('./api/routes/leaveRoutes');
 const reportRoutes = require('./api/routes/reportRoutes');
+const departmentEmployeeRoutes = require('./api/routes/departmentEmployeeRoutes');
 
 // Load environment variables
 require("dotenv").config() 
@@ -30,6 +30,7 @@ app.use(bodyParser.json())
 app.use('/api/auth', authRoutes);
 app.use('/api/leave', leaveRoutes);
 app.use('/api/reports', reportRoutes);
+app.use('/api', departmentEmployeeRoutes);
 
 
 
